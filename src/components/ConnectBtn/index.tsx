@@ -54,9 +54,12 @@ const ConnectBtn = () => {
               console.log(err1);
             }
           }
-          //console.log(suiWallet);
+          console.log(suiWallet);
           //console.log(suiWallet.address);
           const address = suiWallet.account?.address || suiWallet.address;
+          //allWallet.address = address;
+          //allWallet.type = 'sui';
+          //setWallet(...allWallet);
           const latestUserProfile = useUserStore.getState().userProfile;
           if (latestUserProfile) {
             authService.updateProfile(latestUserProfile.userId, {
@@ -153,14 +156,14 @@ const ConnectBtn = () => {
       </PixModal>
       <div
         className={`${
-          allWallet?.address ? 'connect-btn-active' : ''
+          suiWallet?.address ? 'connect-btn-active' : ''
         } connect-btn ml-[10px]  w-[130px] flex items-center justify-around gap-2 box-border border-black border-solid rounded-xl px-4 py-2 Gantari bg-white`}
         onClick={handleWalletConnect}
       >
         <img src={walletIcon} alt="wallet" className="w-[20px] h-[20px] object-contain link-cursor" />
-        {allWallet?.address ? (
+        {suiWallet?.address ? (
           <span className="capitalize text-black text-xs Geologica flex-1 text-center">
-            {allWallet.address.substring(0, 4) + '...' + allWallet.address.substring(allWallet.address.length - 4, allWallet.address.length)}
+            {suiWallet.address}
           </span>
         ) : (
           <span className="capitalize text-black text-xs Geologica flex-1 text-center">connect</span>
