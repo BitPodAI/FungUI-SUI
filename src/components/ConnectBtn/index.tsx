@@ -54,12 +54,9 @@ const ConnectBtn = () => {
               console.log(err1);
             }
           }
-          console.log(suiWallet);
+          //console.log(suiWallet);
           //console.log(suiWallet.address);
           const address = suiWallet.account?.address || suiWallet.address;
-          //allWallet.address = address;
-          //allWallet.type = 'sui';
-          //setWallet(...allWallet);
           const latestUserProfile = useUserStore.getState().userProfile;
           if (latestUserProfile) {
             authService.updateProfile(latestUserProfile.userId, {
@@ -163,7 +160,7 @@ const ConnectBtn = () => {
         <img src={walletIcon} alt="wallet" className="w-[20px] h-[20px] object-contain link-cursor" />
         {suiWallet?.address ? (
           <span className="capitalize text-black text-xs Geologica flex-1 text-center">
-            {suiWallet.address}
+            {suiWallet.address.substring(0, 4) + '...' + suiWallet.address.substring(suiWallet.address.length - 4, suiWallet.address.length)}
           </span>
         ) : (
           <span className="capitalize text-black text-xs Geologica flex-1 text-center">connect</span>
