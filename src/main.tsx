@@ -30,7 +30,7 @@ const wallets = [
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <WalletProvider preferredWallets={['Suiet', 'Sui Wallet']}>
+    <WalletProvider>
       <App />
     </WalletProvider>
   </StrictMode>,

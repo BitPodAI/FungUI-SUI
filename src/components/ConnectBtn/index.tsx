@@ -54,13 +54,15 @@ const ConnectBtn = () => {
               console.log(err1);
             }
           }
-          console.log(suiWallet.address);
+          //console.log(suiWallet);
+          //console.log(suiWallet.address);
+          const address = suiWallet.account?.address || suiWallet.address;
           const latestUserProfile = useUserStore.getState().userProfile;
           if (latestUserProfile) {
             authService.updateProfile(latestUserProfile.userId, {
               ...latestUserProfile,
               walletChainType: 'sui',
-              walletAddress: suiWallet.address,
+              walletAddress: address,
             });
           }
         }
