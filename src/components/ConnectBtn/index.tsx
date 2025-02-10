@@ -9,6 +9,7 @@ import { isWeb } from '@/utils/config';
 import './index.less';
 import { authService } from '@/services/auth';
 import { useWallet } from '@suiet/wallet-kit';
+import { useEffect } from 'react';
 
 const HOST_URL = import.meta.env.VITE_API_HOST_URL;
 
@@ -44,27 +45,23 @@ const ConnectBtn = () => {
       if (userProfile?.userId) {
         if (suiWallet) {
           try {
-            suiWallet.select('Suiet');
+            await suiWallet.select('Suiet');
           }
           catch (err) {
             try {
-              suiWallet.select('Sui Wallet');
+              await suiWallet.select('Sui Wallet');
             }
             catch (err1) {
               console.log(err1);
+              try {
+                await suiWallet.select('Phantom');
+              }
+              catch (err2) {
+                console.log(err2);
+              }
             }
           }
-          //console.log(suiWallet);
-          //console.log(suiWallet.address);
-          const address = suiWallet.account?.address || suiWallet.address;
-          const latestUserProfile = useUserStore.getState().userProfile;
-          if (latestUserProfile) {
-            authService.updateProfile(latestUserProfile.userId, {
-              ...latestUserProfile,
-              walletChainType: 'sui',
-              walletAddress: address,
-            });
-          }
+          //toast("Connect SUI Wallet Success.");
         }
         else {
           connectWallet();
@@ -82,6 +79,20 @@ const ConnectBtn = () => {
       }
     }
   };
+
+  useEffect(() => {
+    //console.log('useEffect');
+    //console.log(suiWallet.address);
+    const address = suiWallet.address || suiWallet.account?.address;
+    const latestUserProfile = useUserStore.getState().userProfile;
+    if (latestUserProfile) {
+      authService.updateProfile(latestUserProfile.userId, {
+        ...latestUserProfile,
+        walletChainType: 'sui',
+        walletAddress: address,
+      });
+    }
+  }, [wallet]);
 
   const disconnectWallet = async (e: React.MouseEvent) => {
     e.preventDefault();

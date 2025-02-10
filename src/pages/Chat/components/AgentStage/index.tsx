@@ -46,10 +46,10 @@ const AgentStage = ({ isHidden }: { isHidden: boolean }) => {
   }, []);
 
   const handleOpenGiftbox = () => {
-    if (!wallet) {
+    /*if (!wallet) {
       toast('Please connect the wallet first.');
       return
-    }
+    }*/
     openGiftModal();
   };
 
